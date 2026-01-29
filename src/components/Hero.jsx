@@ -56,12 +56,13 @@ const Hero = () => {
           </motion.h1>
           
           <motion.p 
-            className={`${styles.heroSubText} mt-2 text-white-100`}
+            className={`${styles.heroSubText} mt-2 text-white-100 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed sm:leading-relaxed md:leading-loose max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             <motion.span
+              className="block sm:inline"
               animate={{ 
                 color: ["#ffffff", "#915EFF", "#00D4FF", "#ffffff"],
               }}
@@ -75,6 +76,7 @@ const Hero = () => {
             </motion.span>
             <br className='sm:block hidden' />
             <motion.span
+              className="block sm:inline mt-1 sm:mt-0"
               animate={{ 
                 y: [0, -2, 0],
                 opacity: [0.8, 1, 0.8]
