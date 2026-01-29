@@ -6,13 +6,28 @@ import { ComputersCanvas } from "./canvas";
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const fullText = "Rabi Khatri Chhetri";
+  const mobileText = "Rabi";
   
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  useEffect(() => {
+    const textToType = isMobile ? mobileText : fullText;
     let currentIndex = 0;
+    
     const typewriterInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayText(fullText.slice(0, currentIndex));
+      if (currentIndex <= textToType.length) {
+        setDisplayText(textToType.slice(0, currentIndex));
         currentIndex++;
       } else {
         // Reset after a pause
@@ -23,7 +38,7 @@ const Hero = () => {
     }, 150);
 
     return () => clearInterval(typewriterInterval);
-  }, []);
+  }, [isMobile]);
 
   return (
     <section className={`relative w-full h-screen mx-auto`}>
