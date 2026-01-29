@@ -88,7 +88,7 @@ const Hero = () => {
             >
               I am MERN stack developer
             </motion.span>
-            <br className='sm:block hidden' />
+            <br />
             <motion.span
               animate={{ 
                 y: [0, -2, 0],
