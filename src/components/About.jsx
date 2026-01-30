@@ -64,11 +64,9 @@ const About = () => {
           className="flex-1"
         >
           <p className="text-secondary text-[17px] max-w-3xl leading-[30px]">
-            I'm a skilled software developer with experience in TypeScript and
-            JavaScript, and expertise in frameworks like React, Node.js, and Next.
-            I'm a quick learner and collaborate closely with clients to create
-            efficient, scalable, and user-friendly solutions that solve real-world
-            problems. Let's work together to bring your ideas to life!
+            I’m a skilled software developer with strong experience in TypeScript and JavaScript, and deep expertise in modern frameworks and libraries including React, Next.js, Node.js, and Three.js. I specialize in building high-performance, scalable, and visually engaging web applications that deliver real value.
+
+I’m a quick learner who adapts easily to new technologies and project requirements, and I believe great products are built through clear communication and close collaboration. I work hand-in-hand with clients to understand their goals, translate ideas into practical solutions, and deliver clean, maintainable code on time.
           </p>
         </motion.div>
       </div>
