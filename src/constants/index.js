@@ -178,6 +178,7 @@ const projects = [
     ],
     image: carrent,
     source_code_link: "https://github.com/RabiChhetri/Frontend",
+    website_link: "https://astar-salon.netlify.app",
   },
   {
     name: "Grocery Delivery Website",
@@ -190,6 +191,7 @@ const projects = [
     ],
     image: jobit,
     source_code_link: "https://github.com/RabiChhetri/ivarcart",
+    website_link: "https://ivarcart.netlify.app",
   },
   {
     name: "Media-Search",
@@ -202,6 +204,7 @@ const projects = [
     ],
     image: tripguide,
     source_code_link: "https://github.com/RabiChhetri/Media-Search",
+    website_link: "https://media-search-app.netlify.app",
   },
 ];
 
