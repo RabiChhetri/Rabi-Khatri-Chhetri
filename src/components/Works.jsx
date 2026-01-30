@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
@@ -74,53 +74,32 @@ const ProjectCard = ({
 };
 
 const Works = () => {
-  const scrollRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const projectsPerPage = 3;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+  const shouldPaginate = projects.length > projectsPerPage;
 
   useEffect(() => {
-    if (projects.length > 3 && scrollRef.current) {
-      const scrollContainer = scrollRef.current;
-      const cardWidth = 360 + 28; // card width + gap
-      const totalWidth = projects.length * cardWidth;
-      const containerWidth = scrollContainer.offsetWidth;
-      
-      if (totalWidth > containerWidth) {
-        let scrollPosition = 0;
-        const maxScroll = totalWidth - containerWidth;
-        
-        const autoScroll = () => {
-          scrollPosition += 1;
-          if (scrollPosition >= maxScroll) {
-            scrollPosition = 0;
-          }
-          scrollContainer.scrollLeft = scrollPosition;
-        };
+    if (shouldPaginate) {
+      const interval = setInterval(() => {
+        setCurrentPage((prevPage) => (prevPage + 1) % totalPages);
+      }, 4000); // Change page every 4 seconds
 
-        const intervalId = setInterval(autoScroll, 30);
-        
-        // Pause on hover
-        const handleMouseEnter = () => clearInterval(intervalId);
-        const handleMouseLeave = () => {
-          const newIntervalId = setInterval(autoScroll, 30);
-          return newIntervalId;
-        };
-
-        scrollContainer.addEventListener('mouseenter', handleMouseEnter);
-        scrollContainer.addEventListener('mouseleave', () => {
-          const newIntervalId = setInterval(autoScroll, 30);
-          scrollContainer.intervalId = newIntervalId;
-        });
-
-        return () => {
-          clearInterval(intervalId);
-          if (scrollContainer.intervalId) {
-            clearInterval(scrollContainer.intervalId);
-          }
-          scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
-          scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
-        };
-      }
+      return () => clearInterval(interval);
     }
-  }, []);
+  }, [shouldPaginate, totalPages]);
+
+  const getCurrentProjects = () => {
+    if (!shouldPaginate) return projects;
+    
+    const startIndex = currentPage * projectsPerPage;
+    const endIndex = startIndex + projectsPerPage;
+    return projects.slice(startIndex, endIndex);
+  };
+
+  const handleDotClick = (pageIndex) => {
+    setCurrentPage(pageIndex);
+  };
 
   return (
     <>
@@ -142,15 +121,34 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div 
-        ref={scrollRef}
-        className="mt-20 overflow-x-auto scrollbar-hide"
-      >
-        <div className="flex gap-7 pb-4" style={{ width: projects.length > 3 ? 'max-content' : '100%' }}>
-          {projects.map((project, index) => (
-            <ProjectCard key={`project-${index}`} index={index} {...project} />
+      <div className="mt-20">
+        <div className="flex flex-wrap gap-7 justify-center">
+          {getCurrentProjects().map((project, index) => (
+            <ProjectCard 
+              key={`project-${currentPage}-${index}`} 
+              index={index} 
+              {...project} 
+            />
           ))}
         </div>
+
+        {/* Pagination Dots */}
+        {shouldPaginate && (
+          <div className="flex justify-center mt-8 gap-3">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handleDotClick(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  currentPage === index
+                    ? 'bg-white scale-125'
+                    : 'bg-gray-500 hover:bg-gray-300'
+                }`}
+                aria-label={`Go to page ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
