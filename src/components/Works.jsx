@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
@@ -74,55 +74,52 @@ const ProjectCard = ({
 };
 
 const Works = () => {
-  const scrollRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const scrollContainerRef = useRef(null);
+  const intervalRef = useRef(null);
+
+  const cardWidth = 360 + 28; // card width + gap
+  const visibleCards = 3;
+  const maxIndex = Math.max(0, projects.length - visibleCards);
 
   useEffect(() => {
-    if (projects.length > 3) {
-      const scrollContainer = scrollRef.current;
-      if (!scrollContainer) return;
-
-      let scrollAmount = 0;
-      const cardWidth = 388; // 360px card + 28px gap
-      const maxScroll = (projects.length - 3) * cardWidth;
-      let direction = 1;
-      let intervalId;
-
-      const autoScroll = () => {
-        scrollAmount += direction * 1;
-        
-        if (scrollAmount >= maxScroll) {
-          direction = -1;
-        } else if (scrollAmount <= 0) {
-          direction = 1;
-        }
-
-        scrollContainer.scrollLeft = scrollAmount;
-      };
-
-      const startAutoScroll = () => {
-        intervalId = setInterval(autoScroll, 30);
-      };
-
-      const stopAutoScroll = () => {
-        if (intervalId) {
-          clearInterval(intervalId);
-        }
-      };
-
-      // Start auto scroll
-      startAutoScroll();
-
-      // Pause on hover
-      scrollContainer.addEventListener('mouseenter', stopAutoScroll);
-      scrollContainer.addEventListener('mouseleave', startAutoScroll);
-
-      return () => {
-        stopAutoScroll();
-        scrollContainer.removeEventListener('mouseenter', stopAutoScroll);
-        scrollContainer.removeEventListener('mouseleave', startAutoScroll);
-      };
+    if (projects.length > 3 && isAutoPlaying) {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex((prevIndex) => {
+          const nextIndex = prevIndex + 1;
+          return nextIndex > maxIndex ? 0 : nextIndex;
+        });
+      }, 3000); // Auto-scroll every 3 seconds
     }
-  }, []);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoPlaying, maxIndex]);
+
+  useEffect(() => {
+    if (scrollContainerRef.current && projects.length > 3) {
+      scrollContainerRef.current.scrollTo({
+        left: currentIndex * cardWidth,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentIndex, cardWidth]);
+
+  const handleMouseEnter = () => {
+    setIsAutoPlaying(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsAutoPlaying(true);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
 
   return (
     <>
@@ -144,15 +141,36 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div 
-        ref={scrollRef}
-        className="mt-20 overflow-x-auto scrollbar-hide"
-      >
-        <div className="flex gap-7 pb-4" style={{ width: projects.length > 3 ? 'max-content' : '100%' }}>
-          {projects.map((project, index) => (
-            <ProjectCard key={`project-${index}`} index={index} {...project} />
-          ))}
+      <div className="mt-20 relative">
+        <div 
+          ref={scrollContainerRef}
+          className="overflow-x-auto scrollbar-hide"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="flex gap-7 pb-4" style={{ width: projects.length > 3 ? 'max-content' : '100%' }}>
+            {projects.map((project, index) => (
+              <ProjectCard key={`project-${index}`} index={index} {...project} />
+            ))}
+          </div>
         </div>
+
+        {/* Carousel Indicators */}
+        {projects.length > 3 && (
+          <div className="flex justify-center mt-6 gap-2">
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  currentIndex === index 
+                    ? 'bg-white' 
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

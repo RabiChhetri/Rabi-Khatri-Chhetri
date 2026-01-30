@@ -209,16 +209,15 @@ const projects = [
    {
     name: "Portfolio Website",
     description:
-      "A modern 3D portfolio website built with React, Three.js, and Framer Motion. Features interactive 3D models, smooth animations, and responsive design to showcase projects and skills.",
+      "A modern 3D portfolio website built with React and Three.js, featuring interactive 3D models, smooth animations, and responsive design to showcase projects and skills.",
     tags: [
       { name: "React", color: "blue-text-gradient" },
       { name: "Three.js", color: "green-text-gradient" },
-      { name: "Framer Motion", color: "pink-text-gradient" },
+      { name: "framer-motion", color: "pink-text-gradient" },
     ],
     image: carrent,
     source_code_link: "https://github.com/RabiChhetri/3d-portfolio",
     website_link: "https://rabi-portfolio.netlify.app",
-  },
   },
 ];
 
