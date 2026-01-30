@@ -14,7 +14,7 @@ export const socialLinks = [
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/in/your-profile", // Replace with your LinkedIn URL
+    url: "https://www.linkedin.com/in/rabi-khatri-chhetri-915b5a356/", // Replace with your LinkedIn URL
     icon: "linkedin"
   },
   {
