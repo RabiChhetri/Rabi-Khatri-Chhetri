@@ -34,6 +34,7 @@ import tripguide from "./tripguide.png";
 import prithivi from "./prithivi.png";
 import yam from "./yam.png";
 import anjan from "./anjan.png";
+import rabi from "./rabi.jpeg";
 
 export {
   logo,
@@ -69,4 +70,5 @@ export {
   prithivi,
   yam,
   anjan,
+  rabi,
 };
