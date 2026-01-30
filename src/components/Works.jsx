@@ -28,7 +28,7 @@ const ProjectCard = ({
           className="w-full h-full object-cover rounded-2xl"
         />
 
-        <div className="absolute inset-0 flex justify-end m-3 gap-2">
+        <div className="absolute top-3 right-3 flex gap-2">
           {website_link && (
             <div
               onClick={() => window.open(website_link, "_blank")}
@@ -94,7 +94,7 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className="mt-20 overflow-x-auto">
+      <div className="mt-20 overflow-x-auto scrollbar-hide">
         <div className="flex gap-7 pb-4" style={{ width: projects.length > 3 ? 'max-content' : '100%' }}>
           {projects.map((project, index) => (
             <ProjectCard key={`project-${index}`} index={index} {...project} />

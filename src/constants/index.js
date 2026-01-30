@@ -206,6 +206,19 @@ const projects = [
     source_code_link: "https://github.com/RabiChhetri/Media-Search",
     website_link: "https://media-search-app.netlify.app",
   },
+   {
+    name: "Media-Search",
+    description:
+      "Media Search is a modern web app that lets users search high-quality photos and videos using the Unsplash and Pexels APIs, with favorites saved locally for quick access.",
+    tags: [
+      { name: "React", color: "blue-text-gradient" },
+      { name: "Redux", color: "green-text-gradient" },
+      { name: "tailwind-css", color: "pink-text-gradient" },
+    ],
+    image: tripguide,
+    source_code_link: "https://github.com/RabiChhetri/Media-Search",
+    website_link: "https://media-search-app.netlify.app",
+  },
 ];
 
 // Exports
