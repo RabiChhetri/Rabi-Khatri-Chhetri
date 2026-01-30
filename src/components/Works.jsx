@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
@@ -74,6 +74,54 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (projects.length > 3 && scrollRef.current) {
+      const scrollContainer = scrollRef.current;
+      const cardWidth = 360 + 28; // card width + gap
+      const totalWidth = projects.length * cardWidth;
+      const containerWidth = scrollContainer.offsetWidth;
+      
+      if (totalWidth > containerWidth) {
+        let scrollPosition = 0;
+        const maxScroll = totalWidth - containerWidth;
+        
+        const autoScroll = () => {
+          scrollPosition += 1;
+          if (scrollPosition >= maxScroll) {
+            scrollPosition = 0;
+          }
+          scrollContainer.scrollLeft = scrollPosition;
+        };
+
+        const intervalId = setInterval(autoScroll, 30);
+        
+        // Pause on hover
+        const handleMouseEnter = () => clearInterval(intervalId);
+        const handleMouseLeave = () => {
+          const newIntervalId = setInterval(autoScroll, 30);
+          return newIntervalId;
+        };
+
+        scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+        scrollContainer.addEventListener('mouseleave', () => {
+          const newIntervalId = setInterval(autoScroll, 30);
+          scrollContainer.intervalId = newIntervalId;
+        });
+
+        return () => {
+          clearInterval(intervalId);
+          if (scrollContainer.intervalId) {
+            clearInterval(scrollContainer.intervalId);
+          }
+          scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
+          scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
+        };
+      }
+    }
+  }, []);
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -94,7 +142,10 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className="mt-20 overflow-x-auto scrollbar-hide">
+      <div 
+        ref={scrollRef}
+        className="mt-20 overflow-x-auto scrollbar-hide"
+      >
         <div className="flex gap-7 pb-4" style={{ width: projects.length > 3 ? 'max-content' : '100%' }}>
           {projects.map((project, index) => (
             <ProjectCard key={`project-${index}`} index={index} {...project} />
