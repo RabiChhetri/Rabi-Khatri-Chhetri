@@ -35,6 +35,7 @@ import prithivi from "./prithivi.png";
 import yam from "./yam.png";
 import anjan from "./anjan.png";
 import rabi from "./rabi.jpeg";
+import dogstudio from "./dogstudio.jpeg";
 
 export {
   logo,
@@ -71,4 +72,5 @@ export {
   yam,
   anjan,
   rabi,
+  dogstudio
 };

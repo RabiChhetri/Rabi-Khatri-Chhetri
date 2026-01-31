@@ -26,6 +26,7 @@ import {
   prithivi, 
   yam,
   anjan,
+  dogstudio,
 } from "../assets";
 
 // Navigation links
@@ -204,20 +205,20 @@ const projects = [
     ],
     image: tripguide,
     source_code_link: "https://github.com/RabiChhetri/Media-Search",
-    website_link: "https://media-search-app.netlify.app",
+    website_link: "https://media-search-wheat.vercel.app/",
   },
    {
-    name: "Portfolio Website",
+    name: "Dog-Studio",
     description:
-      "A modern 3D portfolio website built with React and Three.js, featuring interactive 3D models, smooth animations, and responsive design to showcase projects and skills.",
+      "DogStudio is a unique 3D project built with React, Three.js, and GSAP, featuring interactive visuals, smooth animations, and an engaging, immersive user experience",
     tags: [
       { name: "React", color: "blue-text-gradient" },
       { name: "Three.js", color: "green-text-gradient" },
       { name: "framer-motion", color: "pink-text-gradient" },
     ],
     image: carrent,
-    source_code_link: "https://github.com/RabiChhetri/3d-portfolio",
-    website_link: "https://rabi-portfolio.netlify.app",
+    source_code_link: "https://github.com/RabiChhetri/DogStudio",
+    website_link: "https://dog-studio-xi.vercel.app/",
   },
 ];
 
