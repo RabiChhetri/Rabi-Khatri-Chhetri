@@ -216,7 +216,7 @@ const projects = [
       { name: "Three.js", color: "green-text-gradient" },
       { name: "framer-motion", color: "pink-text-gradient" },
     ],
-    image: carrent,
+    image: dogstudio,
     source_code_link: "https://github.com/RabiChhetri/DogStudio",
     website_link: "https://dog-studio-xi.vercel.app/",
   },
